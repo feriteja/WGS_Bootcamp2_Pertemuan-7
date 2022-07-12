@@ -87,10 +87,38 @@ const deleteContact = (name) => {
   console.log("Contact has been deleted");
 };
 
+const updateContact = (oldName, newName, email, mobile) => {
+  const contacts = loadContact();
+
+  const existingContact = contacts.find((cons) => cons.name === oldName);
+  if (!existingContact) {
+    console.log("name is not found, nothing been updated");
+    return;
+  }
+
+  const filterContact = contacts.filter((contact) => contact.name !== oldName);
+
+  console.log("first");
+  const newContact = [
+    ...filterContact,
+    {
+      name: newName,
+      email: email || existingContact.email,
+      mobile: mobile || existingContact.mobile,
+    },
+  ];
+  fs.writeFileSync("data/Contact.json", JSON.stringify(newContact));
+
+  console.log("Contact has been updated");
+};
+
+delete obj;
+
 module.exports = {
   checkContactFile,
   saveContactFile,
   listContact,
   showDetailContact,
   deleteContact,
+  updateContact,
 };

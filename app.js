@@ -5,6 +5,7 @@ const {
   showDetailContact,
   saveContactFile,
   deleteContact,
+  updateContact,
 } = require("./contact");
 // const { writeContactFile } = require("./contact");
 
@@ -74,6 +75,36 @@ yargs.command({
   },
   handler(argv) {
     deleteContact(argv.name);
+  },
+});
+
+yargs.command({
+  command: "update",
+  describe: "update contact",
+  builder: {
+    oldName: {
+      describe: "Contact name",
+      demandOption: true,
+      type: "string",
+    },
+    newName: {
+      describe: "Contact name",
+      demandOption: true,
+      type: "string",
+    },
+    email: {
+      describe: "Contact email",
+      demandOption: false,
+      type: "string",
+    },
+    mobile: {
+      describe: "Contact mobile phone number",
+      demandOption: false,
+      type: "string",
+    },
+  },
+  handler(argv) {
+    updateContact(argv.oldName, argv.newName, argv.email, argv.mobile);
   },
 });
 
